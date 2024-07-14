@@ -24,7 +24,7 @@ class EmailsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show email" do
-    get email_url(@email)
+    get emai_url(@email)
     assert_response :success
   end
 
