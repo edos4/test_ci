@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= 35 %>
+  checkout_timeout: 60
+  variables:
+    statement_timeout: <%= ENV["ENABLE_GOOD_JOB"].present? ? 0 : 25_000 %>
+
+development:
+  <<: *default
+  database: test_ci_development
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  # IF YOU WANT TO RUN PROD DATASETS IN DEV
+  # url: postgresql://readonly:AVNS_ZygF5p1eZmA-V4Rut6L@partcscoutpgcluster1-do-user-7831234-0.b.db.ondigitalocean.com:25060/directmailerio
+
+test:
+  <<: *default
+  database: test_ci_test
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
